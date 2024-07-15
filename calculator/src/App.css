@@ -12,20 +12,21 @@
 }
 
 .menu{
-  width:100%;
-  height:100%;
+  width:100vw;
+  height:100vh;
+  position: absolute;
+  top: 0; left: 0;
   display: flex;
-  justify-content: center;
-  position: relative;
-  margin-top: 4rem;
+  background: rgb(145,64,199);
+  background: linear-gradient(90deg, rgba(145,64,199,1) 0%, rgba(179,5,5,1) 50%, rgba(249,162,41,1) 100%);
 }
 
 .inner{
-  margin: 2rem;
+  margin: 4rem auto;
   padding: 1rem;
   background-color: burlywood;
   border-radius: 1rem;
   width: 26.5rem;
-  margin: 0 auto;
+  height: 40.5 rem;
 }
 
