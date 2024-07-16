@@ -1,5 +1,5 @@
 .number {
-    background-color: bisque;
+    background-color: #F0EFF5;
     color: #000;
     margin: 1rem;
     padding: 1rem;
@@ -7,13 +7,17 @@
     width: 2.5rem;
     height: 2.5rem;
     text-align: center;
-    border-radius: 0.5rem;
+    border-radius: 2rem;
     border-color: black;
     border-width: 10px;
 }
 
+.number:hover{
+    background-color: #B0AFB1;
+}
+
 .equal{
-    background-color:blanchedalmond;
+    background-color: #FF9501;
     color: #000;
     margin: 1rem;
     padding: 1rem;
@@ -21,7 +25,11 @@
     width: 9rem;
     height: 2.5rem;
     text-align: center;
-    border-radius: 0.5rem;
+    border-radius: 2rem;
     border-color: black;
     border-width: 10px;
+}
+
+.equal:hover{
+    background-color: #FFBF66;
 }
