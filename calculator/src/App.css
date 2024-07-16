@@ -1,17 +1,18 @@
 .text {
   background-color: #F0EFF5;
   color: #000;
-  margin: 1rem;
+  margin: 0.5rem;
   padding: 1rem;
   font-size: 3rem;
   border-radius: 2rem;
   text-align: end;
-  width: 22.5rem;
+  width: 19.5rem;
   border-color: black;
   border-width: 10px;
 }
 
 .menu{
+  overflow: hidden;
   width:100vw;
   height:100vh;
   position: absolute;
@@ -21,11 +22,10 @@
 }
 
 .inner{
-  margin: 4rem auto;
+  margin: auto;
   padding: 1rem;
   background-color: #1D1D1D;
   border-radius: 3rem;
-  width: 26.5rem;
-  height: 40.5 rem;
+  width: 22.5rem;
 }
 
