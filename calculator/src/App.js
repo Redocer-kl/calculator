@@ -73,12 +73,18 @@ function App() {
         setNumber('0');
       }
       else{
-        equal();
         setAction(text);
       }
     }
-    
-    setResult((number !== '0' && number !== '-0') ?  number + " " + text + " " + 0 : temp);
+    if ((number === '0' || number !== '-0') && text === "-"){
+      setResult(temp);
+    }
+    else if(action !== ''){
+      setResult(secondNumber + " " + text + " " + number)
+    }
+    else{
+      setResult(number + " " + text + " " + 0);
+    }
   }
 
   function equal(){
