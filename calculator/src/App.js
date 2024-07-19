@@ -32,7 +32,7 @@ function App() {
       }
     }
     setNumber(temp);
-    setResult(secondNumber !== "0" ? secondNumber + " " + action + " " + temp : temp);
+    setResult(secondNumber !== "0" ? temp + " " + action + " " + secondNumber : temp);
 
   }
   
@@ -49,7 +49,7 @@ function App() {
       temp = number.substring(0, number.length - 1);
     }
     setNumber(temp);
-    setResult(secondNumber !== "0" ? secondNumber + " " + action + " " + temp : temp);
+    setResult(secondNumber !== "0" ? temp + " " + action + " " + secondNumber : temp);
   }
 
   function Clear(){
@@ -80,10 +80,10 @@ function App() {
       setResult(temp);
     }
     else if(action !== ''){
-      setResult(secondNumber + " " + text + " " + number)
+      setResult(number + " " + text + " " + secondNumber)
     }
     else{
-      setResult(number + " " + text + " " + 0);
+      setResult(0 + " " + text + " " + number);
     }
   }
 
@@ -101,7 +101,8 @@ function App() {
         break;
       case '/':
         if(number === '0'){
-        setErrorMessage('Деление на ноль!')
+        setErrorMessage('!Деление на ноль')
+        return "";
         }
         else{
           temp = ((parseFloat(secondNumber) / parseFloat(number)).toString())
@@ -110,6 +111,7 @@ function App() {
       case '%':
         if(secondNumber === '0'){
           setErrorMessage('Деление на ноль!')
+          return "";
           }
         else{
           temp = ((parseFloat(secondNumber) % parseFloat(number)).toString())
@@ -119,7 +121,7 @@ function App() {
         break;
     }
     setSecondNumber(temp);
-    setResult(secondNumber + " " + action + " " + number + " = " + temp);
+    setResult(temp + " = " + number + " " + action + " " + secondNumber);
   }
 
 

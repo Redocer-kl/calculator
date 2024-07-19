@@ -5,14 +5,18 @@
   padding: 1rem;
   font-size: 2.5rem;
   border-radius: 2rem;
-  text-align: end;
+  text-align: right;
   width: 19.5rem;
   border-color: black;
   border-width: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  direction: rtl;
 }
 
 .secondText {
   font-size: 1.5rem;
+  direction: rtl;
 }
 
 .menu{
@@ -32,4 +36,8 @@
   border-radius: 3rem;
   width: 22.5rem;
 }
-
+@media screen and (max-width: 960px) {
+  .menu{
+    height: 90vh;
+  }
+}
