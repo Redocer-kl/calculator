@@ -3,12 +3,16 @@
   color: #000;
   margin: 0.5rem;
   padding: 1rem;
-  font-size: 3rem;
+  font-size: 2.5rem;
   border-radius: 2rem;
   text-align: end;
   width: 19.5rem;
   border-color: black;
   border-width: 10px;
+}
+
+.secondText {
+  font-size: 1.5rem;
 }
 
 .menu{

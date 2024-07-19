@@ -6,6 +6,7 @@ import EqualButton from './components/EqualButton'
 
 function App() {
   const [number, setNumber] = useState("0");
+  const [result, setResult] = useState("0");
   const [secondNumber, setSecondNumber] = useState("0");
   const [point, setPoint] = useState(true);
   const [action, setAction] = useState('');
@@ -14,74 +15,90 @@ function App() {
 
 
   function updateNumber(value) {
+    let temp;
     setErrorMessage('')
     if (value === '.'){
       if (point){
-        setNumber(number + value);
+        temp = number + value;
         setPoint(false);
       }
     }
     else{
-      if (number === '0'){
-        setNumber(value);
+      if (number === '0' || number === '-0'){
+        temp = number.includes('-')? "-" + value : value;
       }
       else{
-        setNumber(number + value);
+        temp = number + value;
       }
     }
-    
+    setNumber(temp);
+    setResult(secondNumber !== "0" ? secondNumber + " " + action + " " + temp : temp);
+
   }
   
 
   function Delete(){
+    let temp;
     if (number.length === 1){
-      setNumber('0');
+      temp = '0';
     }
     else{
       if (number[number.length - 1] === ','){
         setPoint(true);
       }
-      setNumber(number.substring(0, number.length - 1));
+      temp = number.substring(0, number.length - 1);
     }
+    setNumber(temp);
+    setResult(secondNumber !== "0" ? secondNumber + " " + action + " " + temp : temp);
   }
 
   function Clear(){
+    setResult("0");
     setNumber('0');
     setSecondNumber('0');
     setPoint(true);
+    setAction("")
+    setErrorMessage("");
   }
 
   function Action(text){
-    if (action === ''){
-      setAction(text);
-      setSecondNumber(number);
-      setNumber('0');
+    let temp;
+    if (text === '-' && (number === '0' || number === '-0')){
+      temp = (number.includes('-')? number.substring(1) : '-' + number)
+      setNumber(temp);
+    } else{
+      if (action === ''){
+        setAction(text);
+        setSecondNumber(number);
+        setNumber('0');
+      }
+      else{
+        equal();
+        setAction(text);
+      }
     }
-    else{
-      equal();
-      setAction(text);
-      setSecondNumber(number);
-      setNumber('0');
-    }
+    
+    setResult((number !== '0' && number !== '-0') ?  number + " " + text + " " + 0 : temp);
   }
 
   function equal(){
+    let temp;
     switch(action){
       case '+':
-        setNumber((parseFloat(number) + parseFloat(secondNumber)).toString());
+        temp = (parseFloat(number) + parseFloat(secondNumber)).toString();
         break;
       case '-':
-        setNumber(( parseFloat(secondNumber) - parseFloat(number)).toString());
+        temp = (parseFloat(secondNumber) - parseFloat(number)).toString();
         break;
       case '*':
-        setNumber((parseFloat(number) * parseFloat(secondNumber)).toString())
+        temp = (parseFloat(number) * parseFloat(secondNumber)).toString();
         break;
       case '/':
         if(number === '0'){
         setErrorMessage('Деление на ноль!')
         }
         else{
-          setNumber((parseFloat(secondNumber) / parseFloat(number)).toString())
+          temp = ((parseFloat(secondNumber) / parseFloat(number)).toString())
         }
         break;
       case '%':
@@ -89,20 +106,24 @@ function App() {
           setErrorMessage('Деление на ноль!')
           }
         else{
-          setNumber((parseFloat(secondNumber) % parseFloat(number)).toString())
+          temp = ((parseFloat(secondNumber) % parseFloat(number)).toString())
         }
         break;
       default:
         break;
     }
-
+    setSecondNumber(temp);
+    setResult(secondNumber + " " + action + " " + number + " = " + temp);
   }
 
 
   return (
       <div className = 'menu'>
         <div className='inner'>
-        <div className='text'> {errorMessage ? errorMessage : number}</div>
+        <div className='text'>
+          <div className='secondText'> {result} </div>
+          <div> {errorMessage ? errorMessage : number}</div>
+        </div>
           <tbody>
             <tr>
               <td>
