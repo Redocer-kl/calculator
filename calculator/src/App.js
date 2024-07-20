@@ -82,6 +82,7 @@ function App() {
     else{
       if(text === "0" && value === '-'){
         temp = (value);
+        setChanged(true);
       }
       else{
         temp = (text + value);
