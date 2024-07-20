@@ -3,125 +3,96 @@ import './App.css';
 import Button  from './components/Button';
 import DeleteButton from './components/DeleteButton'
 import EqualButton from './components/EqualButton'
+import { motion } from 'framer-motion';
+
+/* eslint no-eval: 0 */
 
 function App() {
-  const [number, setNumber] = useState("0");
+  const [text, setText] = useState("0");
+  const [changed, setChanged] = useState(false);
   const [result, setResult] = useState("0");
-  const [secondNumber, setSecondNumber] = useState("0");
-  const [point, setPoint] = useState(true);
-  const [action, setAction] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-    
+  const [equel, setEqual] = useState(false);
+ 
 
+  function checkLength(value, number){
+    return value.length > number ? value.substring(value.length - number) : value;
+  }
+
+  function evaluateExpression(expression) {
+    try {
+        // Используем eval для вычисления математического выражения
+        setResult(eval(expression));
+    } catch (error) {
+        return 'Ошибка в выражении';
+    }
+  }
 
   function updateNumber(value) {
-    let temp;
-    setErrorMessage('')
-    if (value === '.'){
-      if (point){
-        temp = number + value;
-        setPoint(false);
-      }
+    if (equel){
+      setEqual(false);
+      setText(value);
+      setChanged(value !== '0');
+      evaluateExpression(value);
     }
     else{
-      if (number === '0' || number === '-0'){
-        temp = number.includes('-')? "-" + value : value;
+      let temp;
+      if (!changed){
+        temp = text.substring(0, text.length - 1) + value;
+        setChanged(true);
       }
       else{
-        temp = number + value;
+        temp = (text + value);
       }
+      setText(temp);
+      evaluateExpression(temp);
     }
-    setNumber(temp);
-    setResult(secondNumber !== "0" ? temp + " " + action + " " + secondNumber : temp);
-
   }
   
 
   function Delete(){
     let temp;
-    if (number.length === 1){
-      temp = '0';
+    if(('+-*/%'.includes(text.at[-2]) || text.at[-2] === "undefined") && text.at[-1] !== "0"){
+      temp = (text.substring(0, text.length - 1) + 0)
+      setChanged(false);
     }
     else{
-      if (number[number.length - 1] === ','){
-        setPoint(true);
+      if (text.length === 1){
+        temp = "0";
       }
-      temp = number.substring(0, number.length - 1);
+      else{
+        temp = (text.substring(0, text.length - 1))
+      }
     }
-    setNumber(temp);
-    setResult(secondNumber !== "0" ? temp + " " + action + " " + secondNumber : temp);
+    setText(temp)
+    evaluateExpression(temp)
   }
 
   function Clear(){
-    setResult("0");
-    setNumber('0');
-    setSecondNumber('0');
-    setPoint(true);
-    setAction("")
-    setErrorMessage("");
+    setEqual(false);
+    setChanged(false);
+    setText('0');
+    setResult('0');
   }
 
-  function Action(text){
+  function Action(value){
     let temp;
-    if (text === '-' && (number === '0' || number === '-0')){
-      temp = (number.includes('-')? number.substring(1) : '-' + number)
-      setNumber(temp);
-    } else{
-      if (action === ''){
-        setAction(text);
-        setSecondNumber(number);
-        setNumber('0');
-      }
-      else{
-        setAction(text);
-      }
-    }
-    if ((number === '0' || number !== '-0') && text === "-"){
-      setResult(temp);
-    }
-    else if(action !== ''){
-      setResult(number + " " + text + " " + secondNumber)
+    if ('+-*/%'.includes(text.at(-1))){
+      temp = (text.substring(0, text.length - 1) + value)
     }
     else{
-      setResult(0 + " " + text + " " + number);
+      if(text === "0" && value === '-'){
+        temp = (value);
+      }
+      else{
+        temp = (text + value);
+      }
     }
+    setText(temp);
+    evaluateExpression(temp)
   }
 
   function equal(){
-    let temp;
-    switch(action){
-      case '+':
-        temp = (parseFloat(number) + parseFloat(secondNumber)).toString();
-        break;
-      case '-':
-        temp = (parseFloat(secondNumber) - parseFloat(number)).toString();
-        break;
-      case '*':
-        temp = (parseFloat(number) * parseFloat(secondNumber)).toString();
-        break;
-      case '/':
-        if(number === '0'){
-        setErrorMessage('!Деление на ноль')
-        return "";
-        }
-        else{
-          temp = ((parseFloat(secondNumber) / parseFloat(number)).toString())
-        }
-        break;
-      case '%':
-        if(secondNumber === '0'){
-          setErrorMessage('Деление на ноль!')
-          return "";
-          }
-        else{
-          temp = ((parseFloat(secondNumber) % parseFloat(number)).toString())
-        }
-        break;
-      default:
-        break;
-    }
-    setSecondNumber(temp);
-    setResult(temp + " = " + number + " " + action + " " + secondNumber);
+    setEqual(true);
   }
 
 
@@ -129,8 +100,19 @@ function App() {
       <div className = 'menu'>
         <div className='inner'>
         <div className='text'>
-          <div className='secondText'> {result} </div>
-          <div> {errorMessage ? errorMessage : number}</div>
+          <div className= {equel ? 'secondText' : ""}>
+              {checkLength(text, equal ? 15 : 20)}
+          </div>
+          <motion.div 
+                className= {equel ? "": 'secondText'} 
+                key={result} 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5}}
+            >
+                {checkLength("=" + result, equal ? 20 : 15)}
+          </motion.div>
         </div>
           <tbody>
             <tr>

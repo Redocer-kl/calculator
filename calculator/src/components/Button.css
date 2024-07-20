@@ -10,10 +10,12 @@
     border-radius: 2rem;
     border-color: black;
     border-width: 10px;
+    transition: all 0.2s;
 }
 
 .number:hover{
-    background-color: #B0AFB1;
+    background-color: #ddd;
+    transform: translateY(3px);
 }
 
 .equal{
@@ -28,8 +30,10 @@
     border-radius: 2rem;
     border-color: black;
     border-width: 10px;
+    transition: all 0.2s;
 }
 
 .equal:hover{
     background-color: #FFBF66;
+    transform: translateY(4px);
 }
